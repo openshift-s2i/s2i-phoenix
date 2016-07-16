@@ -1,0 +1,12 @@
+#!/bin/bash -e
+#
+# S2I run script for the 'hello-world-elixir' image.
+# The run script executes the server that runs your application.
+#
+# For more information see the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+export PATH=/opt/node-v6.3.0-linux-x64/bin:$PATH
+export LANG=en_US.utf8
+exec mix phoenix.server
