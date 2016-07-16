@@ -12,8 +12,7 @@ test_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 test_app="hello_world"
 image_dir="$( cd "$( dirname "${test_dir}")" && pwd )"
 
-# TODO: This should be part of the image metadata
-test_port=4000
+test_port="$(docker inspect --format='{{range $key, $value := .Config.ExposedPorts }}{{$key}}{{end}}' ${IMAGE_NAME} | sed 's/\/.*//')"
 
 info() {
   echo -e "\n[INFO] $@...\n"
