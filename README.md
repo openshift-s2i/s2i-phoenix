@@ -28,7 +28,24 @@ Nodejs versions currently provided are:
 CentOS versions currently supported are:
 * CentOS7
 
-Installation
+Openshift Usage
+---------------
+To build a Phoenix image:
+1. Install the example image stream configuration into openshift
+```
+oc create -f image-stream.json
+```
+1. Create the application
+  1. WebUI - Navigate to the project, click 'Add to Project' and search for
+     the new builder image, select it and populate the fields to create your
+     application
+  1. Command Line -
+```
+oc new-app --image-stream=phoenix --code
+     http://github.com/jtslear/phoenix-example.git
+```
+
+Local Usage
 ---------------
 To build a Phoenix image:
 *  **CentOS based image**
@@ -54,13 +71,10 @@ This repository also provides the
 which launches tests to check functionality of a simple Phoenix application built
 on top of the s2i-phoenix image.
 
-Users can choose between testing a Ruby test application based on a RHEL or
-CentOS image.
-
 *  **CentOS based image**
 
     ```
-    $ cd s2i-ruby
+    $ cd s2i-phoenix
     $ docker build -t jtslear/phoenix-builder-candidate . # Test script requires this to be available locally
     $ ./test/run
     ```
