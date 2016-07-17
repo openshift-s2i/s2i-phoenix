@@ -34,6 +34,14 @@ container_ip() {
   fi
 }
 
+get_docker_exec_command() {
+  if [ $CIRCLECI ]; then
+    sudo lxc-attach -n "$(docker inspect --format "{{.Id}}" $(cat $cid_file))" -- /bin/bash -c "${run_cmd}"
+  else
+    docker exec $(cat ${cid_file}) /bin/bash -c "${run_cmd}"
+  fi
+}
+
 run_s2i_build() {
   s2i build ${s2i_args} file://${test_dir}/${test_app} ${IMAGE_NAME} ${IMAGE_NAME}-${test_app}
 }
@@ -111,14 +119,9 @@ test_scl_usage() {
     echo "ERROR[/bin/bash -c "${run_cmd}"] Expected '${expected}', got '${out}'"
     return 1
   fi
-  out=$(docker exec $(cat ${cid_file}) /bin/bash -c "${run_cmd}" 2>&1)
+  out=$(get_docker_exec_command 2>&1)
   if ! echo "${out}" | grep -q "${expected}"; then
     echo "ERROR[exec /bin/bash -c "${run_cmd}"] Expected '${expected}', got '${out}'"
-    return 1
-  fi
-  out=$(docker exec $(cat ${cid_file}) /bin/sh -ic "${run_cmd}" 2>&1)
-  if ! echo "${out}" | grep -q "${expected}"; then
-    echo "ERROR[exec /bin/sh -ic "${run_cmd}"] Expected '${expected}', got '${out}'"
     return 1
   fi
 }

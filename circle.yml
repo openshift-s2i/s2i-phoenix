@@ -1,0 +1,16 @@
+machine:
+  environment:
+    PATH: $PATH:$HOME/.bin
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - mkdir $HOME/.bin
+    - curl -L https://github.com/openshift/source-to-image/releases/download/v1.1.0/source-to-image-v1.1.0-9350cd1-linux-amd64.tar.gz |
+      tar -zx -C $HOME/.bin
+    - docker build -t jtslear/phoenix-builder-candidate .
+
+test:
+  override:
+    - test/run
