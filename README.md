@@ -1,8 +1,6 @@
 Phoenix Docker images
 =====================
 
-[![CircleCI](https://circleci.com/gh/jtslear/s2i-phoenix.svg?style=svg)](https://circleci.com/gh/jtslear/s2i-phoenix)
-
 This repository contains the source for building various versions of
 Phoenix applications as a reproducible Docker image using
 [source-to-image](https://github.com/openshift/source-to-image).
