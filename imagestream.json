@@ -1,0 +1,33 @@
+
+{
+  "kind": "ImageStreamList",
+  "apiVersion": "v1",
+  "metadata": {},
+  "items": [
+    {
+      "kind": "ImageStream",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "phoenix"
+      },
+      "spec": {
+        "tags": [
+          {
+            "name": "1.3",
+            "annotations": {
+              "description": "Build and run Pheonix 1.3 applications",
+              "tags": "builder,phoenix",
+              "supports": "phoenix:1.3,phoenix",
+              "version": "1.3",
+              "sampleRepo": "https://github.com/jtslear/phoenix-example.git"
+            },
+            "from": {
+              "kind": "DockerImage",
+              "name": "jtslear/phoenix-builder:latest"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
