@@ -70,12 +70,8 @@ RUN set -x \
   && yum remove -y \
     autoconf \
     epel-release \
-    gcc \
     gcc-c++ \
-    git \
-    glibc-devel \
     java-1.8.0-openjdk-devel \
-    make \
     ncurses-devel \
     openssl-devel \
     wxBase \

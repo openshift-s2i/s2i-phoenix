@@ -32,7 +32,7 @@ To build a Phoenix image:
 
 1. Clone this repo and enter into the directory
   ```
-  git clone git@github.com:jtslear/s2i-phoenix.git
+  git clone git@github.com:openshift-s2i/s2i-phoenix.git
   cd s2i-phoenix
   ```
 
