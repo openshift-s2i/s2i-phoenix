@@ -13,7 +13,8 @@ Documentation](https://docs.openshift.org/latest/architecture/core_concepts/buil
 Versions
 --------
 Elixir versions currently provided are:
-* 1.3.1
+* 1.2.5
+* 1.3.3
 
 
 Erlang versions currently provided are:
@@ -21,7 +22,7 @@ Erlang versions currently provided are:
 
 
 Nodejs versions currently provided are:
-* 6.3.0
+* 6.7.0
 
 CentOS versions currently supported are:
 * CentOS7
@@ -65,8 +66,11 @@ $ docker pull jtslear/phoenix-builder
 ```
 $ git clone https://github.com/jtslear/s2i-phoenix.git
 $ cd s2i-phoenix
-$ docker build .
+$ make build VERSION=1.3
 ```
+
+**If the `VERSION` parameter is ommitted, the build would occur for all versions
+configured by this repo**
 
 Test
 ----
@@ -78,5 +82,5 @@ on top of the s2i-phoenix image.
 ```
 $ cd s2i-phoenix
 $ docker build -t jtslear/phoenix-builder-candidate . # Test script requires this to be available locally
-$ ./test/run
+$ make test
 ```
