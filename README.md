@@ -38,7 +38,7 @@ To build a Phoenix image:
 
 1. Install the example image stream configuration into openshift
   ```
-  oc create -f image-stream.json
+  oc create -f imagestream.json
   ```
 
 1. Create the application
