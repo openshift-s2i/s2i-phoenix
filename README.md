@@ -15,14 +15,17 @@ Versions
 Elixir versions currently provided are:
 * 1.2.5
 * 1.3.3
+* 1.4.1
 
 
 Erlang versions currently provided are:
-* 18.3
+* 18.3 (On Elixir 1.2 & 1.3)
+* 19.2 (On Elixir 1.4)
 
 
 Nodejs versions currently provided are:
-* 6.7.0
+* 6.7.0 (On Elixir 1.2 & 1.3)
+* 6.9.4 (On Elixir 1.4)
 
 CentOS versions currently supported are:
 * CentOS7
