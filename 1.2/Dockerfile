@@ -1,9 +1,13 @@
 FROM openshift/base-centos7
 
-ENV ERLANG_VERSION 18.3
-ENV ELIXIR_VERSION 1.3.1
-ENV NODE_VERSION v6.3.0
-ENV NPM_VERSION 3.6.0
+ARG ERLANG_VERSION=18.3
+ARG ELIXIR_VERSION=1.2.5
+ARG NODE_VERSION=6.7.0
+ARG NPM_VERSION=3.10.3
+ENV ERLANG_VERSION ${ERLANG_VERSION}
+ENV ELIXIR_VERSION ${ELIXIR_VERSION}
+ENV NODE_VERSION ${NODE_VERSION}
+ENV NPM_VERSION ${NPM_VERSION}
 
 LABEL io.k8s.description="Platform for building and running a phoenix app" \
       io.k8s.display-name="build-phoenix" \
@@ -24,10 +28,10 @@ RUN set -x \
     ncurses-devel \
     openssl-devel \
     wxBase \
-  && curl -LO http://erlang.org/download/otp_src_18.3.tar.gz \
-  && tar xf otp_src_18.3.tar.gz \
-  && rm -rf otp_src_18.3.tar.gz \
-  && cd otp_src_18.3 \
+  && curl -LO http://erlang.org/download/otp_src_${ERLANG_VERSION}.tar.gz \
+  && tar xf otp_src_${ERLANG_VERSION}.tar.gz \
+  && rm -rf otp_src_${ERLANG_VERSION}.tar.gz \
+  && cd otp_src_${ERLANG_VERSION} \
   && export ERL_TOP=`pwd` \
   && ./configure \
   && make \
@@ -47,7 +51,7 @@ RUN set -x \
     wxBase \
   && yum clean all -y \
   && cd .. \
-  && rm -rf otp_src_18.3
+  && rm -rf otp_src_${ERLANG_VERSION}
 
 # Install Elixir
 RUN set -x \
@@ -62,7 +66,7 @@ RUN set -x \
     ncurses-devel \
     openssl-devel \
     wxBase \
-  && git clone -b v1.3.1 https://github.com/elixir-lang/elixir.git \
+  && git clone -b v${ELIXIR_VERSION} https://github.com/elixir-lang/elixir.git \
   && cd elixir \
   && export LANG=en_US.utf8 \
   && make clean test \
@@ -80,10 +84,11 @@ RUN set -x \
   && rm -rf elixir
 
 # Install node/npm
-RUN cd /opt/ \
-  && curl -LO https://nodejs.org/dist/v6.3.0/node-v6.3.0-linux-x64.tar.xz \
-  && tar xf node-v6.3.0-linux-x64.tar.xz \
-  && rm -rf node-v6.3.0-linux-x64.tar.xz
+RUN set -x \
+  && cd /opt/ \
+  && curl -LO https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz \
+  && tar --strip-components 1 -xf node-v${NODE_VERSION}-linux-x64.tar.xz -C /usr/local \
+  && rm -rf node-v${NODE_VERSION}-linux-x64.tar.xz
 
 ENV LANG en_US.UTF-8
 

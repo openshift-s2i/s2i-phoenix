@@ -32,7 +32,6 @@ mix deps.get
 mix deps.compile
 mix compile
 
-export PATH=/opt/node-v6.3.0-linux-x64/bin:$PATH
 npm install -d --no-progress
 
 echo "---> Set permissions on static dir..."
