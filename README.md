@@ -15,14 +15,15 @@ Versions
 Elixir versions currently provided are:
 * 1.2.5
 * 1.3.3
-
+* 1.7.2
 
 Erlang versions currently provided are:
 * 18.3
-
+* 21.0
 
 Nodejs versions currently provided are:
 * 6.7.0
+* 8.11.2
 
 CentOS versions currently supported are:
 * CentOS7
@@ -58,13 +59,13 @@ To build the Phoenix Builder image:
 * This image is available on DockerHub. To download it run:
 
 ```
-$ docker pull jtslear/phoenix-builder
+$ docker pull primemodule/phoenix-builder
 ```
 
 * To build a Phoenix builder image from scratch run:
 
 ```
-$ git clone https://github.com/jtslear/s2i-phoenix.git
+$ git clone https://github.com/primemodule/s2i-phoenix.git
 $ cd s2i-phoenix
 $ make build VERSION=1.3
 ```
@@ -81,6 +82,6 @@ on top of the s2i-phoenix image.
 
 ```
 $ cd s2i-phoenix
-$ docker build -t jtslear/phoenix-builder-candidate . # Test script requires this to be available locally
+$ docker build -t primemodule/phoenix-builder-candidate . # Test script requires this to be available locally
 $ make test
 ```

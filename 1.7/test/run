@@ -156,11 +156,11 @@ test_application() {
   # Wait for the container to write it's CID file
   wait_for_cid
 
-  test_scl_usage "elixir --version" "OTP 18"
+  test_scl_usage "elixir --version" "OTP 20"
   check_result $?
-  test_scl_usage "elixir --version" "Elixir 1.3.3"
+  test_scl_usage "elixir --version" "Elixir 1.6.5"
   check_result $?
-  test_scl_usage "node --version" "v6.7.0"
+  test_scl_usage "node --version" "v8.11.2"
   check_result $?
 
   test_connection
