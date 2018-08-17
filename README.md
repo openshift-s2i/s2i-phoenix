@@ -13,16 +13,12 @@ Documentation](https://docs.openshift.org/latest/architecture/core_concepts/buil
 Versions
 --------
 Elixir versions currently provided are:
-* 1.2.5
-* 1.3.3
 * 1.7.2
 
 Erlang versions currently provided are:
-* 18.3
 * 21.0
 
 Nodejs versions currently provided are:
-* 6.7.0
 * 8.11.2
 
 CentOS versions currently supported are:
@@ -67,7 +63,7 @@ $ docker pull primemodule/phoenix-builder
 ```
 $ git clone https://github.com/primemodule/s2i-phoenix.git
 $ cd s2i-phoenix
-$ make build VERSION=1.3
+$ make build VERSION=1.7
 ```
 
 **If the `VERSION` parameter is ommitted, the build would occur for all versions
