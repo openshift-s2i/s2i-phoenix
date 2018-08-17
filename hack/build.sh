@@ -1,5 +1,5 @@
 #!/bin/bash -ex
-# This script is used to build, test and squash the OpenShift Docker images.
+# This script is used to build and test the OpenShift Docker images.
 #
 # Name of resulting image will be: 'NAMESPACE/BASE_IMAGE_NAME-VERSION'.
 #
@@ -19,7 +19,7 @@ test -z "$BASE_IMAGE_NAME" && {
   BASE_IMAGE_NAME="${BASE_DIR_NAME#s2i-}"
 }
 
-NAMESPACE="jtslear/"
+NAMESPACE="primemodule/"
 
 # Cleanup the temporary Dockerfile created by docker build with version
 trap "rm -f ${DOCKERFILE_PATH}.version" SIGINT SIGQUIT EXIT
@@ -36,9 +36,6 @@ function docker_build_with_version {
     BUILD_OPTIONS+=" --pull=true"
   fi
   docker build ${BUILD_OPTIONS} -t ${IMAGE_NAME} -f "${dockerfile}.version" .
-  if [[ "${SKIP_SQUASH}" != "1" ]]; then
-    squash "${dockerfile}.version"
-  fi
   rm -f "${DOCKERFILE_PATH}.version"
 }
 
