@@ -77,7 +77,8 @@ which launches tests to check functionality of a simple Phoenix application buil
 on top of the s2i-phoenix image.
 
 ```
-$ cd s2i-phoenix
+$ cd s2i-phoenix/1.7
 $ docker build -t primemodule/phoenix-builder-candidate . # Test script requires this to be available locally
+$ cd ..
 $ make test
 ```
