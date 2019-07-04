@@ -41,6 +41,6 @@ foreach ($Version in $Versions) {
   docker build $BuildOptions -t $ImageName $(Join-Path -Path $PSScriptRoot -ChildPath $Version)
 
   if (!$SkipSquash) {
-    docker-squash $ImageName
+    docker-squash -t $ImageName $ImageName
   }
 }
