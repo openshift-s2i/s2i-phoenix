@@ -12,8 +12,6 @@
 
 VERSION=${1-$VERSION}
 
-DOCKERFILE_PATH=""
-
 test -z "$BASE_IMAGE_NAME" && {
   BASE_DIR_NAME=$(echo $(basename `pwd`) | sed -e 's/-[0-9]*$//g')
   BASE_IMAGE_NAME="${BASE_DIR_NAME#s2i-}"
@@ -21,25 +19,18 @@ test -z "$BASE_IMAGE_NAME" && {
 
 NAMESPACE="jtslear/"
 
-# Cleanup the temporary Dockerfile created by docker build with version
-trap "rm -f ${DOCKERFILE_PATH}.version" SIGINT SIGQUIT EXIT
 
 # Perform docker build but append the LABEL with GIT commit id at the end
 function docker_build_with_version {
   local dockerfile="$1"
-  # Use perl here to make this compatible with OSX
-  DOCKERFILE_PATH=$(perl -MCwd -e 'print Cwd::abs_path shift' $dockerfile)
-  cp ${DOCKERFILE_PATH} "${DOCKERFILE_PATH}.version"
   git_version=$(git rev-parse HEAD)
-  echo "LABEL io.openshift.builder-version=\"${git_version}\"" >> "${dockerfile}.version"
   if [[ "${UPDATE_BASE}" == "1" ]]; then
     BUILD_OPTIONS+=" --pull=true"
   fi
-  docker build ${BUILD_OPTIONS} -t ${IMAGE_NAME} -f "${dockerfile}.version" .
+  docker build ${BUILD_OPTIONS} -t ${IMAGE_NAME} --build-arg git_version=${git_version} -f "${dockerfile}" .
   if [[ "${SKIP_SQUASH}" != "1" ]]; then
-    squash "${dockerfile}.version"
+    squash "${dockerfile}"
   fi
-  rm -f "${DOCKERFILE_PATH}.version"
 }
 
 # Versions are stored in subdirectories. You can specify VERSION variable
