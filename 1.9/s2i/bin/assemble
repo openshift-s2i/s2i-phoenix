@@ -1,0 +1,40 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'hello-world-elixir' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+# https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+if [[ "$1" == "-h" ]]; then
+  # If the 'hello-world-elixir' assemble script is executed with '-h' flag,
+  # print the usage.
+  exec /usr/libexec/s2i/usage
+fi
+
+# Restore artifacts from the previous build (if they exist).
+#
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  mv /tmp/artifacts/. ./
+fi
+
+echo "---> Installing application source..."
+cp -Rf /tmp/src/. ./
+
+echo "---> Building application from source..."
+
+export LANG=en_US.utf8
+mix local.hex --force
+mix local.rebar --force
+mix deps.get
+mix deps.compile
+mix compile
+
+npm install -d --no-progress
+
+echo "---> Set permissions on static dir..."
+find /opt/app-root/src -type d -exec chmod a+wx {} \;
+
+echo "---> Completed"
