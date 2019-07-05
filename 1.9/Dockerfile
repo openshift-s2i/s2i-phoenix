@@ -70,9 +70,8 @@ RUN set -x \
   && git clone -b v${ELIXIR_VERSION} https://github.com/elixir-lang/elixir.git \
   && cd elixir \
   && export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
-  # No tests :O because _one single test_ fails with https://github.com/elixir-lang/elixir/issues/9167
-  # && make clean test \
   && make clean \
+  && make test \
   && make install \
   && yum remove -y \
   autoconf \
