@@ -95,6 +95,9 @@ RUN set -x \
 ENV LANG en_US.UTF-8
 
 COPY ./s2i/bin/ /usr/libexec/s2i
+RUN yum install -y --setopt=tsflags=nodocs dos2unix \
+  && find /usr/libexec/s2i -type f | xargs -I % sh -c 'dos2unix %; chmod 755 %' \
+  && yum clean all -y
 
 RUN chown -R 1001:1001 /opt/app-root
 
