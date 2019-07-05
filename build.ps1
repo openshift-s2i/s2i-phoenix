@@ -23,7 +23,17 @@ param(
   # Whether to squash the image
   [Parameter()]
   [Switch]
-  $NoSquash = $false
+  $NoSquash = $false,
+
+  # Whether to tag as latest
+  [Parameter()]
+  [Switch]
+  $NoTagLatest = $false,
+
+  # Whether to push the images
+  [Parameter()]
+  [Switch]
+  $Push = $false
 )
 
 foreach ($Version in $Versions) {
@@ -40,7 +50,19 @@ foreach ($Version in $Versions) {
 
   docker build $BuildOptions -t $ImageName $(Join-Path -Path $PSScriptRoot -ChildPath $Version)
 
-  if (!$SkipSquash) {
+  if (!$NoSquash) {
     docker-squash -t $ImageName $ImageName
+  }
+
+  if (!$NoTagLatest) {
+    docker tag $ImageName $($ImageName -replace ":.*$", ":latest")
+  }
+
+  if ($Push) {
+    docker push $ImageName
+
+    if (!$NoTagLatest) {
+      docker push $($ImageName -replace ":.*$", ":latest")
+    }
   }
 }
