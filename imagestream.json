@@ -22,7 +22,7 @@
             },
             "from": {
               "kind": "DockerImage",
-              "name": "ilkka/phoenix-builder:latest"
+              "name": "ilkka/phoenix-builder:1.9"
             }
           }
         ]
