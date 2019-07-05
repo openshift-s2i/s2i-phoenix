@@ -14,7 +14,7 @@
           {
             "name": "1.9",
             "annotations": {
-              "description": "Build and run Pheonix 1.9 applications",
+              "description": "Build and run Phoenix 1.9 applications",
               "tags": "builder,phoenix",
               "supports": "phoenix:1.9,phoenix",
               "version": "1.9",
